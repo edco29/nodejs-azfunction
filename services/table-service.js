@@ -36,7 +36,7 @@ async function createEntity(tableData) {
 async function updateEntity(tableData) {
 
   return await client
-    .upsertEntity(tableData , "Merge")
+    .updateEntity(tableData , "Merge")
     .then((data) => {
       return data;
     })

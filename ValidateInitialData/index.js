@@ -4,8 +4,8 @@ const { validateBody } = require("../midleware/validator");
 const { getEntity } = require("../services/table-service");
 
 const schema = Joi.object().keys({
-  jiraProjectKey: Joi.string().uppercase().max(6).required(), // eg: PP
-  jiraIssueNumber: Joi.number().integer().min(1).max(9999).required(), // eg: 22
+  jira_project_key: Joi.string().uppercase().max(6).required(), // eg: PP
+  jira_issueNumber_dev: Joi.number().integer().min(1).max(9999).required(), // eg: 22
 });
 
 module.exports = async function (context, req) {
@@ -13,10 +13,10 @@ module.exports = async function (context, req) {
 
   await validateBody(context, context.req.body, schema);
 
-  const { jiraProjectKey, jiraIssueNumber } = context.req.body;
+  const { jira_project_key, jira_issueNumber_dev } = context.req.body;
 
   try {
-    const result = await getEntity(jiraProjectKey, jiraIssueNumber);
+    const result = await getEntity(jira_project_key, jira_issueNumber_dev);
     context.res = {
       status: 200,
       body: result,

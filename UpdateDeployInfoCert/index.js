@@ -27,7 +27,7 @@ module.exports = async function (context, req) {
     partitionKey: jira_project_key,
     rowKey: jira_issueNumber_dev,
     deployment_date_cert: deployment_date_cert,
-    issuekey_cert: jira_issueNumber_cert,
+    issuekey_cert: jira_project_key + "-" + jira_issueNumber_cert,
     job_link_cert: job_link_cert,
   };
 
