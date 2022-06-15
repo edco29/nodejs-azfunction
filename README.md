@@ -1,11 +1,11 @@
 # JIRA CYCLETIME
 
-The idea of this project measures the cycletime (from first commit until production deployment). We are using azure functions to orquestrate the information from Jenkins and sending to an azure table storage and show it in powerBi
+The idea of this project is the measurement of the cycletime (from first commit to the production deployment). We are using azure functions to orquestrate the information from Jenkins and sending to an azure table storage and show it in powerBi
 
 ### WHY NOT USE JIRA CYCLE TIME REPORT ?
 
 Jira cycle time report information is limited by the issues created in the current sprint but what about if we have 1 requirement that it needs more than 
-1 sprint to be develope ? in that case how should we measure the cycletime? for that reason we have created an async stack to store first commit , dev|qa|prod date regardless of the sprint they are in.
+1 sprint to be develop? in that case how should we measure the cycletime? for that reason we have created an async stack to store first commit , dev|qa|prod date regardless of the sprint they are in.
 
 This repo contains a couple of nodejs azure function 
 
