@@ -22,3 +22,9 @@ This repo contains a couple of nodejs azure function
 
 
 ![architecture](https://user-images.githubusercontent.com/40572443/173856480-f37d587d-7dae-48c9-890b-06619b452859.png)
+
+
+## PowerBi Report
+
+
+![cycletime-report-bi](https://user-images.githubusercontent.com/40572443/173860971-cbe8c662-8b80-4367-a0e1-75d18940f968.png)
