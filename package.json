@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@azure/data-tables": "^13.1.2",
-    "azure-middleware": "^1.0.1",
     "joi": "^17.6.0"
   },
   "devDependencies": {}
