@@ -3,7 +3,7 @@ const { TableClient, AzureSASCredential } = require("@azure/data-tables");
 const sharedKeyCredential = new AzureSASCredential(process.env.AZURE_SAS_TOKEN);
 const client = new TableClient(
   `https://mlops3264447618.table.core.windows.net`,
-  `cycletimebaufest`,
+  `nodedemo`,
   sharedKeyCredential
 );
 
