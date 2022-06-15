@@ -37,18 +37,10 @@ pipeline {
     }
     post {
         success {
-            steps {
-                script {
-                    echo 'sucess'
-                }
-            }
+            echo 'success'
         }
         failure {
-            steps {
-                script {
-                    echo 'failure'
-                }
-            }
+            echo 'failure'
         }
         cleanup {
             cleanWs()
