@@ -5,7 +5,7 @@ The idea of this project measures the cycletime (from first commit until product
 ### ¿Why not use jira cycle time report?
 
 Jira cycle time report information is limited by the issues created in the current sprint but what about if we have 1 requirement that it needs more than 
-1 sprint to be develope ?  for that reason we have created an async stack to store first commit , dev|qa|prod date regardless of the sprint they are in.
+1 sprint to be develope ? in that case how should we measure the cycletime? for that reason we have created an async stack to store first commit , dev|qa|prod date regardless of the sprint they are in.
 
 This repo contains a couple of nodejs azure function 
 
