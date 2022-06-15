@@ -14,7 +14,7 @@ pipeline {
 
         post {
             always {
-                sendCycleTimeDataDev(jiraissukey: env.JIRA_ISSUE_KEY )
+                sendCycleTimeDataInt(jiraissukey: env.JIRA_ISSUE_KEY )
             }
             cleanup {
                 cleanWs()
