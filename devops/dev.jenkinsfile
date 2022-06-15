@@ -8,13 +8,12 @@ pipeline {
         APIM_JOB_NAME   = 'pdu/Infraestructura/multicanal/apim-api/api-oc-ne-calcula-cotizacion-vidaleyempleados-vida'
         ENVIRONMENT     = 'integration'
         IMAGE_TAG       = 'latest'
-
     }
-   // parameters {
-   //     booleanParam(name: 'DEPLOY_APIM', defaultValue: false)
-   // }
-    stages{
-        stage("Prepare"){
+    // parameters {
+    //     booleanParam(name: 'DEPLOY_APIM', defaultValue: false)
+    // }
+    stages {
+        stage('Prepare') {
             steps {
                 script {
                     sh "echo $JIRA_ISSUE_KEY"
@@ -22,12 +21,11 @@ pipeline {
             }
         }
 
-
 /*
         stage("Deploy APIM") {
             when { expression { env.DEPLOY_APIM } }
             steps {
-                script {                    
+                script {
                     runJob.azApiMangementApi(
                         jobName: APIM_JOB_NAME,
                         environment: ENVIRONMENT
@@ -39,12 +37,18 @@ pipeline {
     }
     post {
         success {
-            notification(type:'success', env:ENVIRONMENT)
-           
+            steps {
+                script {
+                    echo 'sucess'
+                }
+            }
         }
         failure {
-            notification(type:'failure', env:ENVIRONMENT)
-           
+            steps {
+                script {
+                    echo 'failure'
+                }
+            }
         }
         cleanup {
             cleanWs()
