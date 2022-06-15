@@ -1,3 +1,8 @@
+
 {
-    "name": "Azure"
+    "jira_project_key": "FAU",
+    "jira_issueNumber_dev": "30", 
+    "deployment_date_dev": "2022-05-28 10:25:27-0500",
+    "job_link_dev": "https://argos.jenkins/dev/pipeline/7"
 }
+

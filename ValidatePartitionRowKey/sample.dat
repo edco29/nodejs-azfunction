@@ -1,3 +1,4 @@
 {
-    "name": "Azure"
+    "jira_project_key" : "FAU",
+    "jira_issueNumber_dev" : "30"
 }

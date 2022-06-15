@@ -1,9 +1,0 @@
-
-{
-    "jira_project_key": "FAU",
-    "jira_issueNumber_dev": "30", 
-    "jira_issueNumber_cert" : "31",
-    "deployment_date_cert": "2022-05-29 10:25:27-0500",
-    "job_link_cert": "https://argos.jenkins/cert/pipeline/7"
-}
-

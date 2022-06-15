@@ -1,9 +1,0 @@
-
-{
-    "jira_project_key": "FAU",
-    "jira_issueNumber_dev": "30", 
-    "jira_issueNumber_prod" : "32",
-    "deployment_date_prod": "2022-05-30 10:25:27-0500",
-    "job_link_prod": "https://argos.jenkins/prod/pipeline/1"
-}
-
