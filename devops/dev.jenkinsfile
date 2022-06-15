@@ -9,14 +9,14 @@ pipeline {
         ENVIRONMENT     = 'integration'
         IMAGE_TAG       = 'latest'
     }
-    // parameters {
-    //     booleanParam(name: 'DEPLOY_APIM', defaultValue: false)
-    // }
+     parameters {
+         booleanParam(name: 'DEPLOY_APIM', defaultValue: false)
+     }
     stages {
         stage('Prepare') {
             steps {
                 script {
-                    sh "echo $JIRA_ISSUE_KEY"
+                    echo "Prepare variables , functions and so on"
                 }
             }
         }
