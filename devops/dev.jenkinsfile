@@ -6,17 +6,18 @@ pipeline {
         stage('Prepare') {
             steps {
                 script {
-                    echo "Prepare variables , functions and so on"
+                    echo 'Prepare variables , functions and so on'
                 }
             }
         }
 
-    post {
-       always {
-           sendCycleTimeData()
-       }
-        cleanup {
-            cleanWs()
+        post {
+            always {
+                sendCycleTimeData( environment:"integration" , jiraissukey: env.JIRA_ISSUE_KEY )
+            }
+            cleanup {
+                cleanWs()
+            }
         }
     }
 }
