@@ -2,16 +2,6 @@
 
 pipeline {
     agent any
-    environment {
-        K8S_NAMESPACE   = 'multicanal'
-        SERVICE_NAME    = 'ms-ne-cotizacion-calcula-cotizaciones-vida-ley-empleados-vda'
-        APIM_JOB_NAME   = 'pdu/Infraestructura/multicanal/apim-api/api-oc-ne-calcula-cotizacion-vidaleyempleados-vida'
-        ENVIRONMENT     = 'integration'
-        IMAGE_TAG       = 'latest'
-    }
-     parameters {
-         booleanParam(name: 'DEPLOY_APIM', defaultValue: false)
-     }
     stages {
         stage('Prepare') {
             steps {
@@ -21,27 +11,10 @@ pipeline {
             }
         }
 
-/*
-        stage("Deploy APIM") {
-            when { expression { env.DEPLOY_APIM } }
-            steps {
-                script {
-                    runJob.azApiMangementApi(
-                        jobName: APIM_JOB_NAME,
-                        environment: ENVIRONMENT
-                    )
-                }
-            }
-        }
-        */
-    }
     post {
-        success {
-            echo 'success'
-        }
-        failure {
-            echo 'failure'
-        }
+       always {
+           sendCycleTimeData()
+       }
         cleanup {
             cleanWs()
         }
