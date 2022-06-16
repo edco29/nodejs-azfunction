@@ -26,5 +26,6 @@ This repo contains a couple of nodejs azure function
 
 ## POWERBI REPORT
 
+![cycle-time-report](https://user-images.githubusercontent.com/40572443/174135172-51f55993-6921-4c3e-8cf5-f37b0ce3c80b.png)
 
-![cycle-time-report](https://user-images.githubusercontent.com/40572443/173942876-907c0e7a-4a28-4ffc-8f7c-c2c7e89b6c2a.png)
+
