@@ -13,8 +13,8 @@ pipeline {
     }
 
         post {
-            always {
-                sendCycleTimeDataProd(jiraissukey: env.JIRA_ISSUE_KEY ,  exists: env.JIRA_ISSUE_KEY_VALIDATION , jiralinkedissue: env.LINKED_ISSUE_KEY)
+            success {
+                sendCycleTimeDataProd(jiraIssukey: env.JIRA_ISSUE_KEY ,  jiraIssueKeyValidation: env.JIRA_ISSUE_KEY_VALIDATION , jiraIntIssueKey: env.JIRA_INT_ISSUE_KEY)
             }
             cleanup {
                 cleanWs()

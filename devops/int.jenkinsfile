@@ -13,8 +13,8 @@ pipeline {
     }
 
         post {
-            always {
-                sendCycleTimeDataInt(jiraissukey: env.JIRA_ISSUE_KEY )
+            success {
+                sendCycleTimeDataInt(jiraIssukey: env.JIRA_ISSUE_KEY )
             }
             cleanup {
                 cleanWs()

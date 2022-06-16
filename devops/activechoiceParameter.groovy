@@ -45,7 +45,6 @@ try {
     println (e)
 }
 
-// Only allow execute one command line or call an script.sh
 def executeShell (String command) {
     def sout = new StringBuffer(), serr = new StringBuffer()
     def proc = ['bash', '-c', command].execute()
