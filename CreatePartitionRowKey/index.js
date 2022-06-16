@@ -13,7 +13,7 @@ const schema = Joi.object().keys({
 });
 
 module.exports = async function (context, req) {
-  context.log("Creating Key.......");
+  context.log("Creating Partition and Row Key.......");
   await validateBody(context, context.req.body, schema);
   const {
     jira_project_key,
