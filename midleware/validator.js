@@ -6,7 +6,6 @@ async function validateBody(context, body, schema) {
         status: 400,
         body: "Request body is empty.",
       };
-      context.done("Request Body is empty");
     }
     await schema.validateAsync(body);
     context.log("Successful scheme validation ");
@@ -15,7 +14,6 @@ async function validateBody(context, body, schema) {
       status: 400,
       body: error.message,
     };
-    context.done(error.message);
   }
 }
 
