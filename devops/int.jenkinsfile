@@ -6,7 +6,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 script {
-                    echo 'Prepare variables , functions and so on'
+                    sh "env"
                 }
             }
         }
