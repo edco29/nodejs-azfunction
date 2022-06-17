@@ -14,7 +14,7 @@ pipeline {
 
         post {
             success {
-                sendCycleTimeDataProd(jiraIssukey: env.JIRA_ISSUE_KEY ,  jiraIssueKeyValidation: env.JIRA_ISSUE_KEY_VALIDATION , jiraIntIssueKey: env.JIRA_INT_ISSUE_KEY)
+                sendCycleTimeDataProd(jiraIssueKey: env.JIRA_ISSUE_KEY ,  jiraIssueKeyValidation: env.JIRA_ISSUE_KEY_VALIDATION , jiraIntIssueKey: env.JIRA_INT_ISSUE_KEY)
             }
             cleanup {
                 cleanWs()

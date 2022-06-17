@@ -14,7 +14,7 @@ pipeline {
 
         post {
             success {
-                sendCycleTimeDataInt(jiraIssukey: env.JIRA_ISSUE_KEY )
+                sendCycleTimeDataInt(jiraIssueKey: env.JIRA_ISSUE_KEY )
             }
             cleanup {
                 cleanWs()
