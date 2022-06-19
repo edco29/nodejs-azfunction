@@ -11,9 +11,16 @@ const schema = Joi.object().keys({
 module.exports = async function (context, req) {
   context.log("JavaScript HTTP trigger function processed a request.");
 
-  await validateBody(context, context.req.body, schema);
+  const jira_project_key  = req.query.jira_project_key
+  const jira_issueNumber_dev  = req.query.jira_issueNumber_dev
 
-  const { jira_project_key, jira_issueNumber_dev } = context.req.body;
+  const body = {
+    jira_project_key : jira_project_key ,
+    jira_issueNumber_dev : jira_issueNumber_dev
+  }
+  
+  await validateBody(context, body, schema);
+
 
   try {
     const result = await getEntity(jira_project_key, jira_issueNumber_dev);
