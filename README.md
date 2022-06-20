@@ -1,6 +1,6 @@
 # Jira cycletime
 
-The idea of this project is the measurement of the cycletime (from first commit to the production deployment). We are using azure functions to orquestrate the information from Jenkins and sending to an azure table storage and show it in powerBi
+The idea of this project is to measure the cycletime (cycle time is the time from when developers make a commit to the moment it's deployed to production. ). We are using azure functions to orquestrate the information from Jenkins and sending to an azure table storage and show it in powerBi
 
 ### Why not use jira cycletime report?
 
