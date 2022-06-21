@@ -6,10 +6,10 @@ import jenkins.model.*
 import org.jenkinsci.plugins.scriptler.config.*
 import org.jenkinsci.plugins.scriptler.*
 
-Logger logger = Logger.getLogger("")
+Logger logger = Logger.getLogger('')
 
-def keyCredentialId = "jira-user-password-sitename"
-def JIRA_URL = "https://sitename.atlassian.net"
+def keyCredentialId = 'jira-user-password-sitename'
+def JIRA_URL = 'https://sitename.atlassian.net'
 
 logger.info('Accessing Jira api token')
 def creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
@@ -20,23 +20,22 @@ def JIRA_USER
 def JIRA_PASS
 
 for (c in creds) {
-  if (c.id == keyCredentialId) {
-      JIRA_USER = c.username
-      JIRA_PASS = c.password
-      break
-  }
+    if (c.id == keyCredentialId) {
+        JIRA_USER = c.username
+        JIRA_PASS = c.password
+        break
+    }
 }
 
-def ENCODED_PASSWORD="${JIRA_USER}:${JIRA_PASS}".bytes.encodeBase64().toString()
+def ENCODED_PASSWORD = "${JIRA_USER}:${JIRA_PASS}".bytes.encodeBase64().toString()
 
 try {
     links=executeShell("""
     data=\$( curl -s --location \
       --request GET "${JIRA_URL}/rest/api/2/issue/${JIRA_ISSUE_KEY}?fields=issuelinks" \
       --header 'Authorization: Basic ${ENCODED_PASSWORD}')
-
-      echo \$data | jq  -r '.fields.issuelinks' | jq -r ".[] | .inwardIssue.key"
-
+      echo \$data | jq  -r '.fields.issuelinks' | jq -r ".[] | .inwardIssue.key" | grep -v "null"
+      echo \$data | jq  -r '.fields.issuelinks' | jq -r ".[] | .outwardIssue.key" | grep -v "null"
 """)
     arraylinks = links.readLines()
     arraylinksFinal = (arraylinks.isEmpty()) ? ['No Linked Jira Issues found'] : arraylinks
