@@ -1,8 +1,8 @@
-# Jira cycletime
+# Devops KPI - Cycletime
 
 The idea of this project is to measure the cycletime (cycle time is the time from when developers make a commit to the moment it's deployed to production. ). We are using azure functions to orquestrate the information from Jenkins and sending to an azure table storage and show it in powerBi
 
-### Why not use jira cycletime report?
+### Why not use Jira cycletime report?
 
 Jira cycle time report information is limited by the issues created in the current sprint but what about if we have 1 requirement that it needs more than 
 1 sprint to be develop? in that case how should we measure the cycletime? for that reason we have created an async stack to store first commit , dev|qa|prod date regardless of the sprint they are in.
