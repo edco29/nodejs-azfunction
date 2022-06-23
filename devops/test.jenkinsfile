@@ -18,13 +18,13 @@ pipeline {
                                             classpath: [], 
                                             sandbox: false, 
                                             script: 
-                                                "return['Could not get The environemnts']"
+                                                "return ['Could not get The environemnts']"
                                         ], 
                                         script: [
                                             classpath: [], 
                                             sandbox: false, 
                                             script: 
-                                                "return['dev','stage','prod']"
+                                                "return ['dev','stage','prod']"
                                         ]
                                     ]
                                 ],
