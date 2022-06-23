@@ -8,7 +8,7 @@ pipeline {
                             parameters([
                             string(
                                 //defaultValue: 'JIRA_ISSUE_KEY', 
-                                name: 'STRING-JIRA_ISSUE_KEY', 
+                                name: 'JIRA_ISSUE_KEY', 
                                 description: "Seleccionar el Jira issue Key  vinculado al despliegue de este Pipeline",
                                 trim: true
                             ),
@@ -70,12 +70,12 @@ pipeline {
 
                                     try {
                                         links=executeShell("""
-                                        data=\$( curl -s --location \
-                                        --request GET "https://edwin083.atlassian.net/rest/api/2/issue/${JIRA_ISSUE_KEY}?fields=issuelinks" \
+                                        data=\\$( curl -s --location \\
+                                        --request GET "https://edwin083.atlassian.net/rest/api/2/issue/${JIRA_ISSUE_KEY}?fields=issuelinks" \\
                                         --header 'Authorization: Basic ${ENCODED_PASSWORD}')
 
-                                        echo \$data | jq  -r '.fields.issuelinks' | jq -r ".[] | .inwardIssue.key" | grep -v "null"
-                                        echo \$data | jq  -r '.fields.issuelinks' | jq -r ".[] | .outwardIssue.key" | grep -v "null"
+                                        echo \\$data | jq  -r '.fields.issuelinks' | jq -r ".[] | .inwardIssue.key" | grep -v "null"
+                                        echo \\$data | jq  -r '.fields.issuelinks' | jq -r ".[] | .outwardIssue.key" | grep -v "null"
 
                                     """)
                                         arraylinks = links.readLines()
