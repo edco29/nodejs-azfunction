@@ -9,7 +9,7 @@ pipeline {
                             string(
                                 //defaultValue: 'JIRA_ISSUE_KEY', 
                                 name: 'STRING-JIRA_ISSUE_KEY', 
-                                description: "Seleccionar el Jira issue Key  vinculado al despliegue de este Pipeline"
+                                description: "Seleccionar el Jira issue Key  vinculado al despliegue de este Pipeline",
                                 trim: true
                             ),
                             booleanParam(
