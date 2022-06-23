@@ -94,7 +94,7 @@ pipeline {
                                         println(sout)
                                         return sout
                                     }
-                                    }
+                                    
                                     '''
                                             ]
                                     ]
