@@ -6,79 +6,98 @@ pipeline {
                     script {
                     properties([
                             parameters([
-                                [$class: 'ChoiceParameter', 
-                                    choiceType: 'PT_SINGLE_SELECT', 
-                                    description: 'Select the Environemnt from the Dropdown List', 
-                                    filterLength: 1, 
-                                    filterable: false, 
-                                    name: 'Env', 
-                                    script: [
-                                        $class: 'GroovyScript', 
-                                        fallbackScript: [
-                                            classpath: [], 
-                                            sandbox: false, 
-                                            script: 
-                                                "return ['Could not get The environemnts']"
-                                        ], 
-                                        script: [
-                                            classpath: [], 
-                                            sandbox: false, 
-                                            script: 
-                                                "return ['dev','stage','prod']"
-                                        ]
+                            string(
+                                //defaultValue: 'JIRA_ISSUE_KEY', 
+                                name: 'STRING-JIRA_ISSUE_KEY', 
+                                description: "Seleccionar el Jira issue Key  vinculado al despliegue de este Pipeline"
+                                trim: true
+                            ),
+                            booleanParam(
+                                defaultValue: false, 
+                                description: 'Habilitar cuando el JIRA_ISSUE_KEY seleccionado anteriormente sea el mismo que se uso para el despliegue del pipeline en el ambiente de integración', 
+                                name: 'JIRA_ISSUE_KEY_VALIDATION'
+                            ),
+                            [$class: 'CascadeChoiceParameter', 
+                             choiceType: 'PT_SINGLE_SELECT', 
+                             description: 'Seleccionar el  jira issue key vinculado al  jira issue key de integración',
+                             name: 'JIRA_INT_ISSUE_KEY', 
+                             referencedParameters: 'JIRA_ISSUE_KEY,JIRA_ISSUE_KEY_VALIDATION', 
+                             script: 
+                                [$class: 'GroovyScript', 
+                                 fallbackScript: [
+                                  classpath: [], 
+                                  sandbox: false,
+                                  script: "return ['error']"], 
+                                  script: [
+                                    classpath: [], 
+                                    sandbox: false, 
+                                    script: '''
+
+                                    import hudson.model.*
+                                    import hudson.tools.*
+                                    import java.util.logging.Logger
+                                    import jenkins.*
+                                    import jenkins.model.*
+                                    import org.jenkinsci.plugins.scriptler.config.*
+                                    import org.jenkinsci.plugins.scriptler.*
+
+
+                                    if (JIRA_ISSUE_KEY_VALIDATION){
+                                    return [] ;
+                                    }
+
+                                    Logger logger = Logger.getLogger("")
+
+                                    def keyCredentialId = "jira-user-password-edwin083"
+
+                                    logger.info('Accessing Jira api token')
+                                    def creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
+                                        com.cloudbees.plugins.credentials.Credentials.class,
+                                    )
+
+                                    def JIRA_USER
+                                    def JIRA_PASS
+
+                                    for (c in creds) {
+                                    if (c.id == keyCredentialId) {
+                                        JIRA_USER = c.username
+                                        JIRA_PASS = c.password
+                                        break
+                                    }
+                                    }
+
+                                    def ENCODED_PASSWORD="${JIRA_USER}:${JIRA_PASS}".bytes.encodeBase64().toString()
+
+                                    try {
+                                        links=executeShell("""
+                                        data=\$( curl -s --location \
+                                        --request GET "https://edwin083.atlassian.net/rest/api/2/issue/${JIRA_ISSUE_KEY}?fields=issuelinks" \
+                                        --header 'Authorization: Basic ${ENCODED_PASSWORD}')
+
+                                        echo \$data | jq  -r '.fields.issuelinks' | jq -r ".[] | .inwardIssue.key" | grep -v "null"
+                                        echo \$data | jq  -r '.fields.issuelinks' | jq -r ".[] | .outwardIssue.key" | grep -v "null"
+
+                                    """)
+                                        arraylinks = links.readLines()
+                                        arraylinksFinal = (arraylinks.isEmpty()) ? ['No Linked Jira Issue found'] : arraylinks
+                                        return arraylinksFinal
+                                    } catch (Exception e) {
+                                        println (e)
+                                    }
+
+                                    // Only allow execute one command line or call an script.sh
+                                    def executeShell (String command) {
+                                        def sout = new StringBuffer(), serr = new StringBuffer()
+                                        def proc = ['bash', '-c', command].execute()
+                                        proc.waitForProcessOutput(sout, serr)
+                                        println(serr)
+                                        println(sout)
+                                        return sout
+                                    }
+                                    }
+                                    '''
+                                            ]
                                     ]
-                                ],
-                                [$class: 'CascadeChoiceParameter', 
-                                    choiceType: 'PT_SINGLE_SELECT', 
-                                    description: 'Select the AMI from the Dropdown List',
-                                    name: 'AMI List', 
-                                    referencedParameters: 'Env', 
-                                    script: 
-                                        [$class: 'GroovyScript', 
-                                        fallbackScript: [
-                                                classpath: [], 
-                                                sandbox: false, 
-                                                script: "return['Could not get Environment from Env Param']"
-                                                ], 
-                                        script: [
-                                                classpath: [], 
-                                                sandbox: false, 
-                                                script: '''
-                                                if (Env.equals("dev")){
-                                                    return["ami-sd2345sd", "ami-asdf245sdf", "ami-asdf3245sd"]
-                                                }
-                                                else if(Env.equals("stage")){
-                                                    return["ami-sd34sdf", "ami-sdf345sdc", "ami-sdf34sdf"]
-                                                }
-                                                else if(Env.equals("prod")){
-                                                    return["ami-sdf34sdf", "ami-sdf34ds", "ami-sdf3sf3"]
-                                                }
-                                                '''
-                                            ] 
-                                    ]
-                                ],
-                                [$class: 'DynamicReferenceParameter', 
-                                    choiceType: 'ET_ORDERED_LIST', 
-                                    description: 'Select the  AMI based on the following information', 
-                                    name: 'Image Information', 
-                                    referencedParameters: 'Env', 
-                                    script: 
-                                        [$class: 'GroovyScript', 
-                                        script: 'return["Could not get AMi Information"]', 
-                                        script: [
-                                            script: '''
-                                                    if (Env.equals("dev")){
-                                                        return["ami-sd2345sd:  AMI with Java", "ami-asdf245sdf: AMI with Python", "ami-asdf3245sd: AMI with Groovy"]
-                                                    }
-                                                    else if(Env.equals("stage")){
-                                                        return["ami-sd34sdf:  AMI with Java", "ami-sdf345sdc: AMI with Python", "ami-sdf34sdf: AMI with Groovy"]
-                                                    }
-                                                    else if(Env.equals("prod")){
-                                                        return["ami-sdf34sdf:  AMI with Java", "ami-sdf34ds: AMI with Python", "ami-sdf3sf3: AMI with Groovy"]
-                                                    }
-                                                    '''
-                                                ]
-                                        ]
                                 ]
                             ])
                         ])
